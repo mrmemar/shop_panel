@@ -1,0 +1,13 @@
+.ant-table-wrapper {
+    height: 100%;
+    overflow: auto;
+}
+.td-img{
+    width: 150px;
+}
+.td-img img{
+    width: 100%;
+}
+.d-none{
+    display: none;
+}
