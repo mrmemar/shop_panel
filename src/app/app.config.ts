@@ -7,11 +7,27 @@ import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
+import { jwtInterceptor } from './interceptors/jwt.interceptor';
 
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideNzIcons(), provideNzI18n(en_US), importProvidersFrom(FormsModule), importProvidersFrom(HttpClientModule), provideAnimations()]
+    providers: [
+        provideRouter(routes),
+        provideNzIcons(),
+        provideNzI18n(en_US),
+        importProvidersFrom(FormsModule),
+        importProvidersFrom(HttpClientModule),
+        provideAnimations(),
+        provideToastr({
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+        }),
+        provideHttpClient(
+            withInterceptors([jwtInterceptor])
+        )
+    ]
 };
