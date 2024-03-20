@@ -11,7 +11,7 @@ export class ProductService {
     readonly url = "https://yofakestoreapi.onrender.com/api/products"
     constructor(private http: HttpClient, private toastr: ToastrService) { }
 
-    getList(page: number = 1, size: number = 10): Observable<Response> {
+    list(page: number = 1, size: number = 10): Observable<Response> {
         const url = `${this.url}?limit=${size}&page=${(page - 1) * size}`;
         return this.http.get<Response>(url);
     }

@@ -37,15 +37,15 @@ export class ListComponent implements OnInit, AfterViewInit {
 
 
     ngOnInit(): void {
-        this.getList(1, this.size)
+        this.getProducts(1, this.size)
     }
 
     ngAfterViewInit(): void {
         this.searchHanlder();
     }
 
-    getList(page: number = 1, size: number = 10) {
-        this.productService.getList(page, size).subscribe(q => {
+    getProducts(page: number = 1, size: number = 10) {
+        this.productService.list(page, size).subscribe(q => {
             this.items = q.data;
             this.loading = false;
             this.total = q.paginationResult.numberOfPages;
@@ -54,13 +54,13 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     changePage(page: number) {
         this.loading = true;
-        this.getList(page, this.size);
+        this.getProducts(page, this.size);
     }
 
     changeSize(size: number) {
         this.loading = true;
         this.size = size;
-        this.getList(1, size);
+        this.getProducts(1, size);
     }
 
     searchHanlder() {
