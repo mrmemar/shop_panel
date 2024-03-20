@@ -1,0 +1,34 @@
+<nz-table [nzLoading]="loading" [nzData]="data" [nzFrontPagination]="false" [nzTotal]="total" [nzPageSize]="size"
+    nzOuterBordered [nzPageSizeOptions]="[10,20,30,100]" nzShowSizeChanger>
+    <thead>
+        <tr>
+            @for (col of columns; track $index) {
+            <th>{{col.name}}</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of data; track item._id) {
+        <tr>
+            @for (col of columns; track $index) {
+            @if (col.type == "model" && col.prop) {
+            <td>{{item[col.value][col.prop]}}</td>
+            }
+            @else if (col.type == "image") {
+            <td>
+                <img [src]="col.value">
+            </td>
+            }
+            @else if (col.type == "date") {
+            <td>{{item[col.value] | date}}</td>
+            }
+            @else {
+            <td>{{item[col.value]}}</td>
+            }
+            }
+
+        </tr>
+        }
+
+    </tbody>
+</nz-table>
