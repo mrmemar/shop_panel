@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map } from 'rxjs';
 import { Product } from '../models/product.model';
 import { ToastrService } from 'ngx-toastr';
+import { Paging } from '../models/paging.model';
 
 @Injectable({
     providedIn: 'root'
@@ -61,10 +62,6 @@ export class ProductService {
 
 interface Response {
     results: number;
-    paginationResult: {
-        currentPage: number,
-        limit: number,
-        numberOfPages: number
-    },
+    paginationResult: Paging,
     data: Product[];
 }

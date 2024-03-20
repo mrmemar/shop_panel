@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
+import { Paging } from '../models/paging.model';
 
 @Injectable({
     providedIn: 'root'
@@ -19,9 +20,5 @@ export class UserService {
 interface Response {
     results: number;
     data: User[],
-    paginationResult: {
-        currentPage: number
-        limit: number
-        numberOfPages: number
-    }
+    paginationResult: Paging
 }
