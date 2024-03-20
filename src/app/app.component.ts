@@ -24,6 +24,12 @@ export class AppComponent {
                     { title: "لیست", link: "/products/list" },
                     { title: "افزودن", link: "/products/add" },
                 ]
+            },
+            {
+                title: "کاربران", link: "/users", children: [
+                    { title: "لیست", link: "/users/list" },
+                    // { title: "افزودن", link: "/products/add" },
+                ]
             }
         ]
     }
