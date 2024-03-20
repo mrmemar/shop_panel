@@ -1,20 +1,20 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
-import { NzTableModule } from 'ng-zorro-antd/table';
 import { Product } from '../../../models/product.model';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzInputModule } from 'ng-zorro-antd/input';
 import { Observable, debounceTime, distinctUntilChanged, fromEvent, map, switchMap, tap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { PageHeaderComponent } from '../../common/page-header/page-header.component';
+import { TableComponent } from '../../common/table/table.component';
+import { Column } from '../../../models/column.model';
 @Component({
     selector: 'app-list',
     standalone: true,
-    imports: [NzTableModule, NzDividerModule, NzIconModule, NzInputModule,FormsModule],
+    imports: [FormsModule, TableComponent, PageHeaderComponent
+    ],
     templateUrl: './list.component.html',
     styleUrl: './list.component.css'
 })
-export class ListComponent implements OnInit ,AfterViewInit{
+export class ListComponent implements OnInit, AfterViewInit {
     @ViewChild("searchInput") searchInput: ElementRef = {} as ElementRef;
     loading: boolean = true;
     items: Product[] = [];
@@ -22,7 +22,17 @@ export class ListComponent implements OnInit ,AfterViewInit{
     total: number = 0;
     titleSearchShow: boolean = false;
     searchTitle: string = "";
-    items$ :Observable<Product[]>= new Observable;
+    columns: Column[] = [
+        { name: "عنوان", value: "title", type: "string" },
+        { name: "تعداد", value: "quantity", type: "number" },
+        { name: "قیمت", value: "price", type: "number" },
+        { name: "با تخفیف", value: "priceAfterDiscount", type: "number" },
+        { name: "تصویر", value: "imageCover", type: "image" },
+        { name: "دسته", value: "category", type: "model", prop: "name" },
+        { name: "تاریخ ایجاد", value: "createdAt", type: "date" },
+        { name: "تاریخ وبرایش", value: "updatedAt", type: "date" },
+    ]
+
     constructor(private productService: ProductService) { }
 
 
@@ -35,17 +45,10 @@ export class ListComponent implements OnInit ,AfterViewInit{
     }
 
     getList(page: number = 1, size: number = 10) {
-        // this.items$ = this.productService.getList(page, size).pipe(
-        //     tap(q => {
-        //         this.loading = false;
-        //         this.total = q.total;
-        //     }),
-        //     map(q => q.products),
-        // )
         this.productService.getList(page, size).subscribe(q => {
-            this.items = q.products;
+            this.items = q.data;
             this.loading = false;
-            this.total = q.total;
+            this.total = q.paginationResult.numberOfPages;
         });
     }
 
@@ -70,8 +73,8 @@ export class ListComponent implements OnInit ,AfterViewInit{
                 return this.productService.search(q);
             })
         ).subscribe(q => {
-            this.items = q.products;
-            this.total = q.total;
+            this.items = q.data;
+            this.total = q.paginationResult.numberOfPages;
         });
 
 

@@ -1,13 +1,23 @@
+import { Category } from "./category.model";
+
 export interface Product {
-    id: number;
+
+    _id: string;
     title: string;
+    slug: string;
     description: string;
+    quantity: number;
+    sold: number;
     price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
+    priceAfterDiscount: number;
+    colors: [];
+    imageCover: string;
     images: string[];
+    category: Category;
+    subcategories: [];
+    ratingsQuantity: number;
+    createdAt: string;
+    updatedAt: string;
+    id: string;
+
 }
