@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./assets/css/fonts.css";
-
+@import 'ngx-toastr/toastr';
 
 * {
     font-family: 'Iran-Sans' !important;
 }
 
-.anticon{
+.anticon {
     cursor: pointer;
+}
+
+.d-none {
+    display: none;
 }
