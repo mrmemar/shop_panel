@@ -6,15 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { PageHeaderComponent } from '../../common/page-header/page-header.component';
 import { TableComponent } from '../../common/table/table.component';
 import { Column } from '../../../models/column.model';
+
 @Component({
-    selector: 'app-list',
+    selector: 'app-product-list',
     standalone: true,
-    imports: [FormsModule, TableComponent, PageHeaderComponent
-    ],
-    templateUrl: './list.component.html',
-    styleUrl: './list.component.css'
+    imports: [FormsModule, TableComponent, PageHeaderComponent],
+    templateUrl: './product-list.component.html',
+    styleUrl: './product-list.component.css'
 })
-export class ListComponent implements OnInit, AfterViewInit {
+export class ProductListComponent implements OnInit, AfterViewInit {
     @ViewChild("searchInput") searchInput: ElementRef = {} as ElementRef;
     loading: boolean = true;
     items: Product[] = [];
