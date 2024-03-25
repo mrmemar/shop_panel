@@ -1,5 +1,6 @@
-<nz-table [nzLoading]="loading" [nzData]="data" [nzFrontPagination]="false" [nzTotal]="total" [nzPageSize]="size"
-    nzOuterBordered [nzPageSizeOptions]="[10,20,30,100]" nzShowSizeChanger>
+<nz-table nzBordered [nzLoading]="loading" [nzData]="data" [nzFrontPagination]="false" [nzTotal]="total"
+    [nzPageIndex]="pageIndex" [nzPageSizeOptions]="[10,20,30,100]" nzShowSizeChanger [nzPageSize]="pageSize"
+    (nzPageSizeChange)="_changeSize($event)" (nzPageIndexChange)="_changePage($event)">
     <thead>
         <tr>
             @for (col of columns; track $index) {
@@ -8,19 +9,37 @@
         </tr>
     </thead>
     <tbody>
+        @if(data.length > 0){
         @for (item of data; track item._id) {
         <tr>
             @for (col of columns; track $index) {
-            @if (col.type == "model" && col.prop) {
+            @if (col.type == "model" && col.prop && item[col.value]) {
             <td>{{item[col.value][col.prop]}}</td>
             }
             @else if (col.type == "image") {
-            <td>
-                <img [src]="col.value">
+            <td class="td-img">
+                <img [src]="item[col.value]">
+            </td>
+            }
+            @else if (col.type == "imageArray") {
+            <td class="td-img">
+                <img [src]="item[col.value][0]">
             </td>
             }
             @else if (col.type == "date") {
             <td>{{item[col.value] | date}}</td>
+            }
+            @else if (col.type == "action") {
+            <td>
+                <button (click)="_update(item.id)" nz-button nzType="primary">
+                    <span nz-icon nzType="edit" nzTheme="outline"></span>
+                </button>
+                <button nz-popconfirm nzPopconfirmTitle="آیا مطمئن هستید؟" (nzOnConfirm)="_remove(item.id)" nz-button
+                    nzType="primary" nzCancelText="خیر" nzOkText="بله" nzOkDanger>
+                    <span nz-icon nzType="delete" nzTheme="outline"></span>
+
+                </button>
+            </td>
             }
             @else {
             <td>{{item[col.value]}}</td>
@@ -28,7 +47,10 @@
             }
 
         </tr>
+
         }
+        }
+
 
     </tbody>
 </nz-table>

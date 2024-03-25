@@ -1,12 +1,16 @@
-.ant-table-wrapper {
-    height: 100%;
-    overflow: auto;
-}
-
 .td-img {
-    width: 150px;
+    width: 130px;
+    padding: 10px;
 }
 
 .td-img img {
     width: 100%;
+    border-radius: 5px;
+    height: 65px;
+    object-fit: cover;
+}
+
+th,
+td {
+    padding: 10px;
 }
