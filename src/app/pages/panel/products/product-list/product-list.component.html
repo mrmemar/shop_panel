@@ -1,0 +1,5 @@
+<div>
+    <app-page-header title="لیست محصولات"></app-page-header>
+    <app-table [data]="productItems" [columns]="productColumns" [total]="total" (remove)="removeProduct($event)"
+        (update)="updateProduct($event)" (getList)="getProducts()"></app-table>
+</div>
