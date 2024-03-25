@@ -1,14 +1,17 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
-import { RegisterComponent } from './pages/auth/register/register.component';
 import { authGuard } from './gaurd/auth.guard';
+import { PanelComponent } from './pages/panel/panel.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: '', pathMatch: 'full', redirectTo: '/products' },
-    { path: "products", canActivate: [authGuard], loadChildren: () => import('./pages/products/products.routes').then(r => r.ROUTES) },
-    { path: "users", canActivate: [authGuard], loadChildren: () => import('./pages/users/users.routes').then(r => r.ROUTES) }
-
+    { path: 'login', component: LoginComponent, title: "ورود به پنل" },
+    { path: "", redirectTo: "/panel", pathMatch: 'full' },
+    {
+        path: "panel", component: PanelComponent, canActivate: [authGuard], children: [
+            { path: "products", loadChildren: () => import('./pages/panel/products/products.routes').then(r => r.ROUTES) },
+            { path: "users", loadChildren: () => import('./pages/panel/users/users.routes').then(r => r.ROUTES) },
+            { path: "categories", loadChildren: () => import('./pages/panel/category/categories.routes').then(r => r.ROUTES) },
+        ]
+    }
 
 ];
