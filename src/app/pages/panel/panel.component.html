@@ -25,10 +25,27 @@
     <nz-layout>
         <nz-header>
             <div class="app-header">
-                <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-                    <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
-                </span>
+                <div nz-flex nzJustify="space-between" nzAlign="center">
+                    <div class="header-trigger" (click)="isCollapsed = !isCollapsed">
+                        <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-fold' : 'menu-unfold'"></span>
+                    </div>
+                    <div>
+                        <a routerLink="/panel">{{profile.name}} - {{profile.role}}</a>
+                    </div>
+
+                    <nz-avatar [nzSrc]="profile.avatar" nzSize="large" nzIcon="user" nz-popover
+                        [nzPopoverTitle]="profile.name" nzPopoverPlacement="bottomLeft" [nzPopoverVisible]="isPopover"
+                        [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"
+                        (nzPopoverVisibleChange)="isPopover = !isPopover" [nzPopoverArrowPointAtCenter]="false">
+                    </nz-avatar>
+                </div>
             </div>
+            <ng-template #contentTemplate>
+                <div>
+                    <p><a [routerLink]="['/panel/users/edit',profile.id]">ویرایش</a></p>
+                    <p><a routerLink="/panel/profile/loguot">خروج</a></p>
+                </div>
+            </ng-template>
         </nz-header>
         <nz-content>
             <div class="inner-content">
@@ -36,4 +53,5 @@
             </div>
         </nz-content>
     </nz-layout>
+
 </nz-layout>

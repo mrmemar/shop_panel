@@ -1,23 +1,29 @@
-import { AfterContentChecked, AfterContentInit, AfterRenderOptions, AfterRenderRef, AfterViewChecked, AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { Menu } from '../../models/menu.model';
-
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzFlexModule } from 'ng-zorro-antd/flex';
+import { User } from '../../models/user.model';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 @Component({
     selector: 'app-panel',
     standalone: true,
-    imports: [CommonModule, RouterOutlet, NzIconModule, NzLayoutModule, NzMenuModule, RouterLink],
+    imports: [CommonModule, RouterOutlet, NzIconModule, NzLayoutModule, NzMenuModule, RouterLink,
+        NzAvatarModule, NzFlexModule, NzPopoverModule],
     templateUrl: './panel.component.html',
     styleUrl: './panel.component.css'
 })
-export class PanelComponent {
+export class PanelComponent implements OnInit {
+    profile: User = {} as User;
     isCollapsed = false;
+    isPopover: boolean = false;
     menuItems: Menu[] = [];
 
-    constructor() {
+    constructor(private route: ActivatedRoute) {
         this.menuItems = [
             {
                 title: "محصولات", link: "/panel/products", children: [
@@ -38,5 +44,15 @@ export class PanelComponent {
                 ]
             },
         ]
+    }
+
+    ngOnInit(): void {
+        this.getProfile();
+    }
+
+    getProfile() {
+        this.route.data.subscribe(q => {
+            this.profile = q['profile']
+        });
     }
 }

@@ -10,10 +10,12 @@ export const routes: Routes = [
     { path: "", redirectTo: "/panel", pathMatch: 'full' },
     {
         path: "panel", component: PanelComponent, canActivate: [authGuard], resolve: { profile: profileResolver }, children: [
+
+            { path: "", loadChildren: () => import('./pages/panel/account/account.routes').then(r => r.ROUTES) },
+            { path: "profile", loadChildren: () => import('./pages/panel/account/account.routes').then(r => r.ROUTES) },
             { path: "products", loadChildren: () => import('./pages/panel/products/products.routes').then(r => r.ROUTES) },
             { path: "users", loadChildren: () => import('./pages/panel/users/users.routes').then(r => r.ROUTES) },
             { path: "categories", loadChildren: () => import('./pages/panel/category/categories.routes').then(r => r.ROUTES) },
-            { path: "profile", loadChildren: () => import('./pages/panel/profile/profile.routes').then(r => r.ROUTES) },
         ]
     },
     { path: "**", component: NotFoundComponent }
