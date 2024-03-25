@@ -1,0 +1,4 @@
+<div>
+    <app-page-header title="لیست کاربران"></app-page-header>
+    <app-table (update)="updateUser($event)" [data]="userItems" [total]="total" [columns]="userColumns"></app-table>
+</div>
