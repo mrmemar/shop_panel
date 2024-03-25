@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { authGuard } from './gaurd/auth.guard';
 import { PanelComponent } from './pages/panel/panel.component';
 import { profileResolver } from './resolve/profile.resolver';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent, title: "ورود به پنل" },
@@ -14,6 +15,7 @@ export const routes: Routes = [
             { path: "categories", loadChildren: () => import('./pages/panel/category/categories.routes').then(r => r.ROUTES) },
             { path: "profile", loadChildren: () => import('./pages/panel/profile/profile.routes').then(r => r.ROUTES) },
         ]
-    }
+    },
+    { path: "**", component: NotFoundComponent }
 
 ];
