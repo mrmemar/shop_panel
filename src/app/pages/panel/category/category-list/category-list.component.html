@@ -1,0 +1,3 @@
+<app-page-header title="لیست دسته ها"></app-page-header>
+<app-table [columns]="categoryColumns" [data]="categoryItems" [total]="total" (remove)="removeCategory($event)"
+    (update)="updateCategory($event)"></app-table>
