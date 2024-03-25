@@ -42,6 +42,6 @@ export class UserListComponent implements OnInit {
     }
 
     updateUser(id: number) {
-        this.router.navigate(["users/edit", id])
+        this.router.navigate(["panel/users/edit", id])
     }
 }

@@ -67,7 +67,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     }
 
     updateProduct(id: number) {
-        this.router.navigate([`/products/edit/`, id])
+        this.router.navigate([`panel/products/edit/`, id])
     }
 
 

@@ -52,6 +52,6 @@ export class CategoryListComponent implements OnInit {
     }
 
     updateCategory(id: number) {
-        this.router.navigate([`/categories/edit/`, id])
+        this.router.navigate([`panel/categories/edit/`, id])
     }
 }
