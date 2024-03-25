@@ -1,34 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
 import { AuthService } from '../../../services/auth.service';
+import { FormComponent } from '../../common/form/form.component';
+import { Form } from '../../../models/form.model';
+import { User } from '../../../models/user.model';
+import { BehaviorSubject } from 'rxjs';
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [NzFormModule, ReactiveFormsModule, NzInputModule],
+    imports: [FormComponent],
     templateUrl: './login.component.html',
     styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-    loginForm: FormGroup = {} as FormGroup;
-    constructor(private fb: FormBuilder, private authService: AuthService) { }
+    loginForms: Form[] = [];
+    clear: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    constructor(private authService: AuthService) {
+        this.loginForms = [
+            { label: "ایمیل", name: "email", type: "text" },
+            { label: "کلمه عبور", name: "password", type: "text" },
+        ]
+    }
 
     ngOnInit(): void {
-        this.createForm();
     }
 
-    createForm() {
-        this.loginForm = this.fb.group({
-            email: ["admin@mail.com", [Validators.required, Validators.email]],
-            password: ["123456", Validators.required]
+    login(model: User) {
+        this.authService.login(model).subscribe({
+            error: (err) => {
+                this.clear.next(true)
+            }
         })
-    }
-
-    login() {
-        if (this.loginForm.valid) {
-            console.log(this.loginForm)
-            this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe();
-        }
     }
 }

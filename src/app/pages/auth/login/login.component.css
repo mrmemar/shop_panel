@@ -1,3 +1,9 @@
+.wrapper {
+    max-width: 650px;
+    margin: 50px auto;
+
+}
+
 .login-form {
     max-width: 300px;
 }

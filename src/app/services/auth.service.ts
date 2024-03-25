@@ -1,60 +1,89 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { User } from '../models/user.model';
-import { Observable, catchError, tap } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Observable, catchError, map, tap } from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    readonly url = "https://yofakestoreapi.onrender.com/api/auth";
-    token: string | null;
-    constructor(private http: HttpClient, private toastr: ToastrService) {
-        this.token = localStorage.getItem("token_panel");
+    readonly url = "https://api.escuelajs.co/api/v1/auth";
+    token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+    constructor(private http: HttpClient, private msg: NzMessageService, private router: Router) {
+        this.loadToken();
     }
 
-    isLogin(): boolean {
-        if (this.token)
-            return true;
-        return false;
+    private setToken(reponse: Response) {
+        this.token.next(reponse.access_token)
+        localStorage.setItem("token_panel", reponse.access_token);
+        localStorage.setItem("refresh_panel", reponse.refresh_token);
     }
 
-    register(model: {
-        name: string,
-        email: string,
-        password: string,
-        passwordConfirm: string
-    }): Observable<Response> {
-        const url = `${this.url}/signup`;
-        const body = {
-            name: model.name,
-            email: model.email,
-            password: model.password,
-            passwordConfirm: model.passwordConfirm
-        };
-        return this.http.post<Response>(url, body)
+    loadToken(): string | null {
+        this.token.next(localStorage.getItem("token_panel"));
+        return this.token.value;
     }
 
-    login(email: string, password: string) {
+    clearToken() {
+        this.token.next(null)
+        localStorage.removeItem("token_panel");
+        localStorage.removeItem("refresh_panel");
+    }
+
+    login(model: User): Observable<Response> {
         const url = `${this.url}/login`;
-        const body = {
-            email,
-            password
-        };
-        return this.http.post<Response>(url, body).pipe(
+        return this.http.post<Response>(url, model).pipe(
             tap(q => {
-                this.token = q.token;
-                localStorage.setItem("token_panel", this.token);
+                if (q.access_token) {
+                    this.setToken(q);
+                    this.loadToken();
+                    this.msg.success("خوش آمدید");
+                    this.router.navigate(["panel"]);
+                } else {
+                    this.msg.error('wrong!')
+                }
             }), catchError(err => {
-                this.toastr.error(err.error.message)
+                this.msg.error(err.error.message)
                 throw err;
             })
         )
     }
+
+    logout() {
+        this.clearToken();
+        this.router.navigate(["login"])
+    }
+
+    check(): Observable<boolean> {
+        const url = `${this.url}/profile`;
+        return this.http.get<User>(url).pipe(
+            map(q => {
+                if (q.id) {
+                    return true;
+                }
+                return false;
+            }),
+            catchError(err => {
+                throw err;
+            })
+        );
+    }
+
+    profile(): Observable<User> {
+        const url = `${this.url}/profile`;
+        return this.http.get<User>(url);
+    }
+
+    refresh(): Observable<Response> {
+        const url = `${this.url}/refresh-token`;
+        const body = { refreshToken: localStorage.getItem("refresh_panel") }
+        return this.http.post<Response>(url, body)
+    }
 }
 
 interface Response {
-    data: User;
-    token: string;
+    access_token: string;
+    refresh_token: string;
 }
