@@ -1,12 +1,11 @@
 export interface User {
-    _id: string;
+    id: number;
     name: string;
+    role: string;
     email: string;
     password: string;
-    role: string;
-    active: boolean;
-    wishlist: [];
-    addresses: [];
-    createdAt: string;
+    avatar: string;
+    image: string;
+    creationAt: string;
     updatedAt: string;
 }
