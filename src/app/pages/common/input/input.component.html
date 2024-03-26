@@ -1,1 +1,50 @@
-<p>input works!</p>
+<nz-form-item [formGroup]="formGroup">
+    <nz-form-control [nzErrorTip]="formItem.error">
+        @if(formItem.type == "textarea"){
+        <nz-input-group [nzSuffix]="textAreaClearTpl" class="ant-input-affix-wrapper-textarea-with-clear-btn">
+            <textarea nz-input [formControlName]="formItem.name" [placeholder]="formItem.label"></textarea>
+        </nz-input-group>
+        <ng-template #textAreaClearTpl>
+            @if (1) {
+            <span nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle"></span>
+            }
+        </ng-template>
+        }
+        @else if (formItem.type=="select" ) {
+        <nz-select [formControlName]="formItem.name" nzShowSearch nzAllowClear [nzPlaceHolder]="formItem.label"
+            nzServerSearch>
+            @for (option of formItem.options; track $index) {
+            <nz-option [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            }
+
+
+        </nz-select>
+        }
+        @else if (formItem.type == "image") {
+        <input type="hidden" [formControlName]="formItem.name" (ngModelChange)="imageUrl = $event" />
+        <nz-upload class="avatar-uploader" nzAction="https://api.escuelajs.co/api/v1/files/upload"
+            nzListType="picture-card" [nzShowUploadList]="false" (nzChange)="fileChange($event)">
+            <ng-container *ngIf="!imageUrl">
+                <span class="upload-icon" nz-icon></span>
+                <div class="ant-upload-text">بارگذاری تصویر</div>
+            </ng-container>
+            <img *ngIf="imageUrl" [src]="imageUrl" style="width: 100%" />
+        </nz-upload>
+        }
+        @else if (formItem.type == "imageArray") {
+        <nz-upload nzAction="https://api.escuelajs.co/api/v1/files/upload" nzListType="picture-card"
+            [(nzFileList)]="fileList" [nzShowButton]="fileList.length < 8"
+            (nzChange)="fileListChange(formItem.name,$event)">
+            <div>
+                <span nz-icon nzType="plus"></span>
+                <div style="margin-top: 8px">بارگذاری تصویر</div>
+            </div>
+        </nz-upload>
+        }
+        @else {
+        <nz-input-group>
+            <input [formControlName]="formItem.name" nz-input [placeholder]="formItem.label" />
+        </nz-input-group>
+        }
+    </nz-form-control>
+</nz-form-item>
