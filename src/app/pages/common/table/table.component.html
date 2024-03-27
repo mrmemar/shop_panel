@@ -13,39 +13,12 @@
         @for (item of data; track item._id) {
         <tr>
             @for (col of columns; track $index) {
-            @if (col.type == "model" && col.prop && item[col.value]) {
-            <td>{{item[col.value][col.prop]}}</td>
-            }
-            @else if (col.type == "image") {
-            <td class="td-img">
-                <img [src]="item[col.value]">
-            </td>
-            }
-            @else if (col.type == "imageArray") {
-            <td class="td-img">
-                <img [src]="item[col.value][0]">
-            </td>
-            }
-            @else if (col.type == "date") {
-            <td>{{item[col.value] | date}}</td>
-            }
-            @else if (col.type == "action") {
-            <td>
-                <button (click)="_update(item.id)" nz-button nzType="primary">
-                    <span nz-icon nzType="edit" nzTheme="outline"></span>
-                </button>
-                <button nz-popconfirm nzPopconfirmTitle="آیا مطمئن هستید؟" (nzOnConfirm)="_remove(item.id)" nz-button
-                    nzType="primary" nzCancelText="خیر" nzOkText="بله" nzOkDanger>
-                    <span nz-icon nzType="delete" nzTheme="outline"></span>
+            <td [style.width]="col.width">
+                <app-table-cell [row]="item" [col]="col" (remove)="_remove($event)"
+                    (update)="_update($event)"></app-table-cell>
 
-                </button>
             </td>
             }
-            @else {
-            <td>{{item[col.value]}}</td>
-            }
-            }
-
         </tr>
 
         }

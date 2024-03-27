@@ -1,1 +1,29 @@
-<p>table-cell works!</p>
+@if (col.type == "model" && col.prop && row[col.value]) {
+{{row[col.value][col.prop]}}
+}
+@else if (col.type == "image") {
+<div class="img">
+    <img [src]="row[col.value]">
+</div>
+}
+@else if (col.type == "imageArray") {
+<div class="img">
+    <img [src]="row[col.value][0]">
+</div>
+}
+@else if (col.type == "date") {
+{{row[col.value] | date}}
+}
+@else if (col.type == "action") {
+<button (click)="_update(row.id)" nz-button nzType="primary">
+    <span nz-icon nzType="edit" nzTheme="outline"></span>
+</button>
+<button nz-popconfirm nzPopconfirmTitle="آیا مطمئن هستید؟" (nzOnConfirm)="_remove(row.id)" nz-button nzType="primary"
+    nzCancelText="خیر" nzOkText="بله" nzOkDanger>
+    <span nz-icon nzType="delete" nzTheme="outline"></span>
+
+</button>
+}
+@else {
+{{row[col.value]}}
+}

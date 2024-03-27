@@ -26,7 +26,7 @@ export class CategoryListComponent implements OnInit {
         this.categoryColumns = [
             { name: "ID", type: "number", value: "id" },
             { name: "نام", type: "string", value: "name" },
-            { name: "تصویر", type: "image", value: "image" },
+            { name: "تصویر", type: "image", value: "image", width: "150px" },
             { name: "تاریخ ایجاد", type: "date", value: "creationAt" },
             { name: "تاریخ ویرایش", type: "date", value: "updatedAt" },
             { name: "عملیات", type: "action", value: "" },

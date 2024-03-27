@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { NzTableComponent } from 'ng-zorro-antd/table';
 import { Column } from '../../../models/column.model';
-import { DatePipe } from '@angular/common';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+
+
 import { ActivatedRoute, Router } from '@angular/router';
+import { TableCellComponent } from '../table-cell/table-cell.component';
 @Component({
     selector: 'app-table',
     standalone: true,
-    imports: [NzTableComponent, DatePipe, NzIconModule, NzPopconfirmModule],
+    imports: [NzTableComponent, TableCellComponent],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })

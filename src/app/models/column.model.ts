@@ -3,5 +3,5 @@ export interface Column {
     value: string;
     type: 'boolean' | 'string' | 'email' | 'date' | 'model' | 'image' | 'number' | 'action' | 'imageArray';
     prop?: string;
-
+    width?: string;
 }
