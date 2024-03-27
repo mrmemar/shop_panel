@@ -16,7 +16,9 @@ export class PageHeaderComponent implements OnInit {
 
     }
     ngOnInit(): void {
-        const link = this.route.url.split("/")[1]
+        const urls = this.route.url.split("/")
+        urls.splice(urls.length - 1, 1)
+        const link = urls.join("/")
         this.addLink = `/${link}/add`
     }
 
