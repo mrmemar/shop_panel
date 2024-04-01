@@ -4,7 +4,9 @@
     <thead>
         <tr>
             @for (col of columns; track $index) {
-            <th>{{col.name}}</th>
+            <th>
+                <app-table-head [col]="col" (getList)="getList.emit()"></app-table-head>
+            </th>
             }
         </tr>
     </thead>
@@ -16,14 +18,10 @@
             <td [style.width]="col.width">
                 <app-table-cell [row]="item" [col]="col" (remove)="_remove($event)"
                     (update)="_update($event)"></app-table-cell>
-
             </td>
             }
         </tr>
-
         }
         }
-
-
     </tbody>
 </nz-table>

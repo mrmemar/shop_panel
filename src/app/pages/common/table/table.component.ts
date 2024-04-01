@@ -5,10 +5,11 @@ import { Column } from '../../../models/column.model';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableCellComponent } from '../table-cell/table-cell.component';
+import { TableHeadComponent } from '../table-head/table-head.component';
 @Component({
     selector: 'app-table',
     standalone: true,
-    imports: [NzTableComponent, TableCellComponent],
+    imports: [NzTableComponent, TableCellComponent, TableHeadComponent],
     templateUrl: './table.component.html',
     styleUrl: './table.component.css'
 })
@@ -61,8 +62,9 @@ export class TableComponent implements OnInit, OnChanges {
         this.router.navigate([], { queryParams: { size: this.pageSize }, queryParamsHandling: 'merge' }).then(() => {
             this.getList.emit();
         })
-
     }
+
+
 
 
 }

@@ -15,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     templateUrl: './product-list.component.html',
     styleUrl: './product-list.component.css'
 })
-export class ProductListComponent implements OnInit, AfterViewInit {
+export class ProductListComponent implements OnInit {
     @ViewChild("searchInput") searchInput: ElementRef = {} as ElementRef;
     productItems: Product[] = [];
     total: number = 0;
@@ -28,8 +28,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     ) {
         this.productColumns = [
             { name: "ID", value: "id", type: "number", },
-            { name: "عنوان", value: "title", type: "string", },
-            { name: "قیمت", value: "price", type: "number" },
+            { name: "عنوان", value: "title", type: "string", searchKey: "title" },
+            { name: "قیمت", value: "price", type: "number", searchKey: "price" },
             { name: "دسته", value: "category", type: "model", prop: "name" },
             { name: "تصویر", value: "images", type: "imageArray" },
             { name: "تاریخ ایجاد", value: "creationAt", type: "date" },
@@ -42,16 +42,9 @@ export class ProductListComponent implements OnInit, AfterViewInit {
         this.getProducts()
     }
 
-    ngAfterViewInit(): void {
-        this.searchHanlder();
-    }
-
-
-
     getProducts() {
-        const pageIndex = this.route.snapshot.queryParams['page'];
-        const pageSize = this.route.snapshot.queryParams['size'];
-        this.productService.list(pageIndex, pageSize).subscribe(q => {
+
+        this.productService.list().subscribe(q => {
             this.productItems = q;
             this.total = 50
         });
@@ -69,23 +62,4 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     updateProduct(id: number) {
         this.router.navigate([`panel/products/edit/`, id])
     }
-
-
-    searchHanlder() {
-
-        // fromEvent(this.searchInput.nativeElement, "keyup").pipe(
-        //     map((event: any) => event.target.value),
-        //     debounceTime(1000),
-        //     distinctUntilChanged(),
-        //     switchMap(q => {
-        //         return this.productService.search(q);
-        //     })
-        // ).subscribe(q => {
-        //     this.items = q.data;
-        //     this.total = q.paginationResult.numberOfPages;
-        // });
-
-
-    }
-
 }

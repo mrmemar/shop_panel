@@ -4,4 +4,5 @@ export interface Column {
     type: 'boolean' | 'string' | 'email' | 'date' | 'model' | 'image' | 'number' | 'action' | 'imageArray';
     prop?: string;
     width?: string;
+    searchKey?: string;
 }

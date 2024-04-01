@@ -1,1 +1,10 @@
-<p>table-head works!</p>
+<div>
+    {{col.name}}
+    @if (col.searchKey) {
+    <i nz-icon type="filter" nzTheme="outline" (click)="showSearchInput()"></i>
+    }
+</div>
+@if(col.searchKey){
+<input #searchInput [style.display]="(showInput) ? '' : 'none'" nz-input [placeholder]="col.name"
+    [(ngModel)]="searchTitle" />
+}
