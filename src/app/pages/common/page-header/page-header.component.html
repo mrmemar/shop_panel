@@ -1,7 +1,10 @@
 <nz-page-header class="site-page-header" nzBackIcon [nzTitle]="title">
     <nz-page-header-extra>
         <nz-space>
-            <a class="btn btn-success" [routerLink]="addLink">افزودن</a>
+            <button nz-button nzType="primary" [routerLink]="addLink">
+                <span nz-icon nzType="plus" nzTheme="outline"></span>
+                افزودن
+            </button>
         </nz-space>
     </nz-page-header-extra>
 </nz-page-header>

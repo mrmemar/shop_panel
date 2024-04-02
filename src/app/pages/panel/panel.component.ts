@@ -9,6 +9,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzFlexModule } from 'ng-zorro-antd/flex';
 import { User } from '../../models/user.model';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+
 @Component({
     selector: 'app-panel',
     standalone: true,
@@ -26,19 +27,19 @@ export class PanelComponent implements OnInit {
     constructor(private route: ActivatedRoute) {
         this.menuItems = [
             {
-                title: "محصولات", link: "/panel/products", children: [
+                title: "محصولات", icon: "shop", link: "/panel/products", children: [
                     { title: "لیست", link: "/panel/products/list" },
                     { title: "افزودن", link: "/panel/products/add" },
                 ]
             },
             {
-                title: "دسته ها", link: "/panel/categories", children: [
-                    { title: "لیست", link: "/panel/categories/list" },
+                title: "دسته ها", icon: "partition", link: "/panel/categories", children: [
+                    { title: "لیست", icon: "menu", link: "/panel/categories/list" },
                     { title: "افزودن", link: "/panel/categories/add" },
                 ]
             },
             {
-                title: "کاربران", link: "/panel/users", children: [
+                title: "کاربران", icon: "user", link: "/panel/users", children: [
                     { title: "لیست", link: "/panel/users/list" },
                     { title: "افزودن", link: "/panel/users/add" },
                 ]

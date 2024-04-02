@@ -1,7 +1,7 @@
 <div>
     {{col.name}}
     @if (col.searchKey) {
-    <i nz-icon type="filter" nzTheme="outline" (click)="showSearchInput()"></i>
+    <i nz-icon type="filter" [nzTheme]="(searchTitle) ? 'fill' : 'outline'" (click)="showSearchInput()"></i>
     }
 </div>
 @if(col.searchKey){
