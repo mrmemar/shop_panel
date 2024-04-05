@@ -1,3 +1,4 @@
 <div class="wrapper">
-    <app-form [formItems]="loginForms" [clear]="clear" (save)="login($event)"></app-form>
+    <app-form buttonName="ورود" [formItems]="loginForms" [clear]="clear" (save)="login($event)"
+        [model]="model"></app-form>
 </div>

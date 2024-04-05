@@ -14,6 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
     loginForms: Form[] = [];
+    model: any;
     clear: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     constructor(private authService: AuthService) {
         this.loginForms = [
@@ -23,6 +24,13 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        setTimeout(() => {
+            this.model = {
+                email: "admin@mail.com",
+                password: "admin123"
+            }
+        }, 0);
+
     }
 
     login(model: User) {
