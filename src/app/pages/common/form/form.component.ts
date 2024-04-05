@@ -16,6 +16,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 export class FormComponent implements OnInit, OnChanges {
     @Input() formItems: Form[] = [];
     @Input() model: any;
+    @Input() buttonName: string = "دخیره";
     @Input() clear: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     @Output() save = new EventEmitter();
     loading = false;
