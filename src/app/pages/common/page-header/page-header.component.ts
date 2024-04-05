@@ -15,14 +15,18 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 export class PageHeaderComponent implements OnInit {
     @Input() title: string = "";
     addLink: string = "";
-    constructor(private route: Router) {
-
+    typePage: string = "";
+    constructor(private router: Router, private route: ActivatedRoute) {
+        if (this.route.snapshot.params['id']) {
+            this.typePage = "ویرایش"
+        }
     }
     ngOnInit(): void {
-        const urls = this.route.url.split("/")
-        urls.splice(urls.length - 1, 1)
-        const link = urls.join("/")
-        this.addLink = `/${link}/add`
+        const urls = this.router.url.split("/")
+        if (urls[urls.length - 1] == "add") {
+            this.typePage = "افزودن"
+        }
+        this.addLink = `${urls[0]}/${urls[1]}/${urls[2]}/add`
     }
 
 }
