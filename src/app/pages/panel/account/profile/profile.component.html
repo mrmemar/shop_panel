@@ -1,1 +1,11 @@
-<p>profile works!</p>
+<nz-space>
+
+    <button nz-button [nzType]="(chartType == 'bar') ? 'primary' : 'default'"
+        (click)="changeChartType('bar')">bar</button>
+    <button nz-button [nzType]="(chartType == 'pie') ? 'primary' : 'default'"
+        (click)="changeChartType('pie')">pie</button>
+    <button nz-button [nzType]="(chartType == 'donut') ? 'primary' : 'default'"
+        (click)="changeChartType('donut')">donut</button>
+</nz-space>
+<ag-charts-angular style="height: 100%" [options]="chartOptions">
+</ag-charts-angular>
